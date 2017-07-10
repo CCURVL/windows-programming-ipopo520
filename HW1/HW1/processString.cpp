@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
-
+#include <math.h>
 #include <gtest\gtest.h>
 
 using namespace std;
@@ -18,8 +18,85 @@ int getAscendingStr(string& inputStr)
 {
 	
 	/// Please fill your code here
+	string take;
+	string number;
+	string ans;
+	string temp1;
+	int current;
+	int count = 0;
+	int total = inputStr.length();
+	
+	int i,j;
+	int min_pos;
+	int min_num;
+	int temp;
+	int position;
+	int flag = 0;
+	for (i = 0; i != total+1; i++)
+	{
+		temp1 = inputStr[i];
+		
+		
+		if (int(*(temp1.c_str())) >= 48 && int(*(temp1.c_str())) <= 57|| int(*(temp1.c_str()))==45)
+		{
+			number.push_back(inputStr[i]);
+		}
+		else if (int(*(temp1.c_str())) == 32||i==total)
+		{
+			current = atoi(number.c_str());
+			
+			
+			if (ans.empty() == 1)
+			{
+				ans.append(number);
+				ans.append(" ");
+				number.clear();
+			}
+			else
+			{
+				for (int j = 0; j != ans.length(); j++)
+				{
+					temp1 = ans[j];
+					if (int(*(temp1.c_str())) >= 48 && int(*(temp1.c_str())) <= 57 || int(*(temp1.c_str())) == 45)
+						take.push_back(ans[j]);
+					else
+					{
+						
+						if (current < atoi(take.c_str()))
+						{
+							number.append(" ");
+							position = ans.find(take);
+							ans.insert(position, number);
+							flag = 1;
+							break;
+						}
+						take.clear();
+					}
+
+				}
+				if (flag != 1)
+				{
+					number.append(" ");
+					ans.append(number);
+				}
+				
+			}
+			number.clear();
+			take.clear();
+			flag = 0;
+		}
+		else
+			return -1;
+	}
 
 
+
+
+
+	
+	inputStr.clear();
+	inputStr.append(ans);
+	inputStr.pop_back();
 	return 0;
 }
 
@@ -36,7 +113,24 @@ int getAscendingStr(string& inputStr)
 //          (return vector size should be 0)
 int solveQ(vector<double> &x, double a, double b, double c)
 {
-
+	if (b*b - 4 * a*c > 0)
+	{
+		double x1= (-1 * b + sqrt(b*b - 4 * a*c)) / (a * 2);
+		double x2= (-1 * b - sqrt(b*b - 4 * a*c))/ (a * 2);
+		x.push_back(x1);
+		x.push_back(x2);
+		
+		
+		return 1;
+	}
+	else if (b*b - 4 * a*c == 0)
+	{
+		double x1 = (-1 * b + sqrt(b*b - 4 * a*c)) / (a * 2);
+		x.push_back(x1);
+		return 0;
+	}
+	else
+		return -1;
 	return 0;
 }
 
